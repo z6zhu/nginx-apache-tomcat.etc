@@ -1,1 +1,55 @@
 
+django proxy: 　一个简单的本地代理服务器,端口代理
+
+
+ location / {
+                include uwsgi_params;      #   uwsgi parame
+                uwsgi_pass 127.0.0.1:8000;    　　　＃　被代理的地址　
+                uwsgi_read_timeout 1200;
+                uwsgi_send_timeout 300;
+                proxy_read_timeout 300;
+       }
+
+        location /static {
+                alias /usr/local/eclipse/workspace/pagina/pagin/collected_static;   # proxy server(nginx)  缓存远程的静态文件
+        }
+        
+        
+        
+        
+        －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+        #服务器的集群  
+    upstream  netitcast.com {  #服务器集群名字   
+        server    127.0.0.1:18080  weight=1;#服务器配置   weight是权重的意思，权重越大，分配的概率越大。  
+        server    127.0.0.1:28080  weight=2;  #被代理的服务器
+    }     
+  
+    #当前的Nginx的配置  
+    server {  
+        listen       80;#监听80端口，可以改成其他端口  
+        server_name  localhost;##############   当前服务的域名 　　注册域名 
+  
+    location / {  
+            proxy_pass http://netitcast.com;  　＃　指向的集群域名
+            proxy_redirect default;  　　　　
+        }  
+          
+  
+        error_page   500 502 503 504  /50x.html;  
+        location = /50x.html {  
+            root   html;  
+        }  
+    }  
+}  
+
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+为了提高响应速度，减轻真实服务器的负载，对于静态资源我们可以在反向代理服务器中进行缓存，这也是反向代理服务器的一个重要的作用。
+
+
+在nginx服务文件夹中创建静态资源文件夹，并要缓存的静态文件拷贝进去：这里我主要将Web程序中用到的image、css以及js文件拷贝了进去；
+
+
+
+
+
+
