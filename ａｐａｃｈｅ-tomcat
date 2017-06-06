@@ -1,1 +1,18 @@
 
+不同的端口对应与不同的ａｐｐ
+
+apache-tomcat-6.0.29/conf找到server.xml
+
+ <Service name="bm1">
+        <Connector port="8081"  maxThreads="150" minSpareThreads="25" maxSpareThreads="75"      enableLookups="false" redirectPort="8443" acceptCount="100" debug="0" connectionTimeout="20000" disableUploadTimeout="true" URIEncoding="GBK"/>
+      <Engine name="sms" defaultHost="localhost">
+      <Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase"/>
+     <Host name="localhost" appBase="webapps/test" unpackWARs="true" autoDeploy="true"   xmlValidation="false" xmlNamespaceAware="false">
+   <Context path="" docBase="C:/Program Files/Apache Software Foundation/Tomcat 6.0/webapps2/bookManagement" reloadable="true" workDir="D:/temp/Tomcat/test" debug="0"/>
+             </Host>
+         </Engine>
+    </Service>
+    
+    在<services>结点后面增加<services>结点
+    
+    复制webapps目录, 命名成webapps2
