@@ -16,3 +16,8 @@ apache-tomcat-6.0.29/conf找到server.xml
     在<services>结点后面增加<services>结点
     
     复制webapps目录, 命名成webapps2
+    
+    
+    
+    更简单的方法：
+    直接复制成两个apache_tomcat
