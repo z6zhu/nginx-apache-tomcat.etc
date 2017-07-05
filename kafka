@@ -21,3 +21,16 @@ single:
 单击伪分布式：
 
 ｍｕｌｔｉ　的简单版本
+
+简单测试生产着:
+
+#!/usr/bin/python
+from pykafka import KafkaClient
+client=KafkaClient(hosts="localhost:9092")
+client.topics
+topic =client.topics['testtopic']
+msg='test for my'
+producer=topic.get_sync_producer()
+producer.produce(msg)
+print msg
+
